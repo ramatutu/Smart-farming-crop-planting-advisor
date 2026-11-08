@@ -68,3 +68,19 @@ def test_analyze_overall_conditions() -> None:
     advisor: PlantingAdvisor = create_advisor()
 
     assert advisor.analyze_overall_conditions() == "All three sample growing conditions are suitable."
+def test_analyze_pest_and_disease_risk() -> None:
+    advisor: PlantingAdvisor = create_advisor()
+    result = advisor.analyze_pest_and_disease_risk()
+
+    assert "PEST AND DISEASE RISK ANALYSIS" in result
+    assert "Maize" in result
+    assert "Fall armyworm" in result
+
+
+def test_pest_risk_with_missing_weather_data() -> None:
+    advisor: PlantingAdvisor = create_advisor()
+    advisor.weather_data.pop("rainfall")
+
+    result = advisor.analyze_pest_and_disease_risk()
+
+    assert "cannot be fully assessed" in result
