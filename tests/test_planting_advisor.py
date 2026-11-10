@@ -79,7 +79,10 @@ def test_analyze_pest_and_disease_risk() -> None:
 
 def test_pest_risk_with_missing_weather_data() -> None:
     advisor: PlantingAdvisor = create_advisor()
-    advisor.weather_data.pop("rainfall")
+    advisor = PlantingAdvisor(
+        advisor.crop,
+        {"temperature": 27, "soil_moisture": 65},
+    )
 
     result = advisor.analyze_pest_and_disease_risk()
 
